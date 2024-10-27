@@ -172,10 +172,21 @@ LIMIT 5;
 --16. Average Duration of Movies by Rating
 
 SELECT rating, AVG(CAST(SPLIT_PART(duration, ' ', 1) AS INTEGER)) AS avg_duration
-FROM netflix_titles
+FROM netflix
 WHERE type = 'Movie' AND duration IS NOT NULL
 GROUP BY rating
 ORDER BY avg_duration DESC;
+
+--17. Rank Top 3 Movies by Year Based on Duration
+
+SELECT title, release_year, duration,
+       RANK() OVER (PARTITION BY release_year ORDER BY CAST(SPLIT_PART(duration, ' ', 1) AS INTEGER) DESC) AS rank
+FROM netflix
+WHERE type = 'Movie'
+ORDER BY release_year, rank
+LIMIT 100;
+
+--18.
 
 ```
 
