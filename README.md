@@ -168,6 +168,15 @@ WHERE country = 'India'
 GROUP BY country, release_year
 ORDER BY avg_release DESC
 LIMIT 5;
+
+--16. Average Duration of Movies by Rating
+
+SELECT rating, AVG(CAST(SPLIT_PART(duration, ' ', 1) AS INTEGER)) AS avg_duration
+FROM netflix_titles
+WHERE type = 'Movie' AND duration IS NOT NULL
+GROUP BY rating
+ORDER BY avg_duration DESC;
+
 ```
 
 ## Findings and Conclusion
